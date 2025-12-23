@@ -8,7 +8,6 @@ This project is simple application for user to organize daily task build with **
 
 ---
 
-## Navigate into project folder
 
 ```bash
 cd todos
