@@ -5,12 +5,20 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [workingTitle, setWorkingTitle] = useState(todo.title);
 
-  
+  // Update todo
   function handleUpdate(event) {
-    if (!isEditing) return; 
+    if (!isEditing) return;
     event.preventDefault();
     onUpdateTodo({ ...todo, title: workingTitle });
-    setIsEditing(false); 
+    setIsEditing(false);
+  }
+
+  // Cancel editing helper
+  function handleCancel() {
+    setWorkingTitle(todo.title);
+    setIsEditing(false);         
+
+
   }
 
   return (
@@ -27,7 +35,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
             <button type="button" onClick={handleUpdate}>
               Update
             </button>
-            <button type="button" onClick={() => setIsEditing(false)}>
+            <button type="button" onClick={handleCancel}>
               Cancel
             </button>
           </>
