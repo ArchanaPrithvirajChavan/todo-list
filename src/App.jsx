@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from "react";
-import TodoList from "./features/TodoList/TodoList";
+import TodoList from "./features/TodoList";
 
 
-import TodoForm from "./features/TodoList/TodoForm";
-import TodosViewForm from "./features/TodoList/TodosViewForm";
+import TodoForm from "./features/TodoForm";
+import TodosViewForm from "./features/TodosViewForm";
 import "./App.css";
 
    /*encode Airtable URL?*/
@@ -224,14 +224,6 @@ function App() {
     <>
       <h1>MY Todo List</h1>
 <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
-
-      
-  <TodoList
-        todoList={todoList}
-        onCompleteTodo={completeTodo}
-        onUpdateTodo={updateTodo}
-        isLoading={isLoading}
-      />
 <TodosViewForm
         sortField={sortField}
         setSortField={setSortField}
@@ -240,6 +232,14 @@ function App() {
         queryString={queryString}
         setQueryString={setQueryString}
       />
+      
+  <TodoList
+        todoList={todoList}
+        onCompleteTodo={completeTodo}
+        onUpdateTodo={updateTodo}
+        isLoading={isLoading}
+      />
+
 
       
 
