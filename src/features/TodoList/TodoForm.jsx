@@ -8,7 +8,7 @@ function TodoForm({ onAddTodo, isSaving }) {
     if (!workingTodoTitle.trim()) return;
 
     
-    await onAddTodo({ itle: workingTodoTitle, isCompleted: false });
+    await onAddTodo({ title: workingTodoTitle, isCompleted: false });
 
     
     setWorkingTodoTitle("");
