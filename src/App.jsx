@@ -2,12 +2,11 @@
 import React, { useState, useEffect } from "react";
 import TodoList from "./features/TodoList";
 
-
 import TodoForm from "./features/TodoForm";
 import TodosViewForm from "./features/TodosViewForm";
 import "./App.css";
 
-   /*encode Airtable URL?*/
+   
 function encodeUrl(baseUrl, { sortField, sortDirection, queryString }) {
   const sortQuery = `sort[0][field]=${sortField}&sort[0][direction]=${sortDirection}`;
 
@@ -224,14 +223,7 @@ function App() {
     <>
       <h1>MY Todo List</h1>
 <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
-<TodosViewForm
-        sortField={sortField}
-        setSortField={setSortField}
-        sortDirection={sortDirection}
-        setSortDirection={setSortDirection}
-        queryString={queryString}
-        setQueryString={setQueryString}
-      />
+
       
   <TodoList
         todoList={todoList}
@@ -240,7 +232,14 @@ function App() {
         isLoading={isLoading}
       />
 
-
+<TodosViewForm
+        sortField={sortField}
+        setSortField={setSortField}
+        sortDirection={sortDirection}
+        setSortDirection={setSortDirection}
+        queryString={queryString}
+        setQueryString={setQueryString}
+      />
       
 
       {errorMessage && (

@@ -8,8 +8,13 @@ function TodosViewForm({
   queryString,
   setQueryString,
 }) {
+  // Prevent page refresh if user presses Enter
+  function preventRefresh(event) {
+    event.preventDefault();
+  }
+
   return (
-    <form style={{ marginBottom: "20px" }}>
+    <form style={{ marginBottom: "20px" }} onSubmit={preventRefresh}>
       {/* --- Search Todos --- */}
       <div style={{ marginBottom: "10px" }}>
         <label htmlFor="search" style={{ marginRight: "10px" }}>
@@ -46,7 +51,10 @@ function TodosViewForm({
           <option value="isCompleted">Completed</option>
         </select>
 
-        <label htmlFor="sortDirection" style={{ marginLeft: "20px", marginRight: "10px" }}>
+        <label
+          htmlFor="sortDirection"
+          style={{ marginLeft: "20px", marginRight: "10px" }}
+        >
           Direction:
         </label>
         <select
