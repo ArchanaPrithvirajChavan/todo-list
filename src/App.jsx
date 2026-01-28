@@ -1,24 +1,12 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import TodoList from "./features/TodoList";
 
 import TodoForm from "./features/TodoForm";
 import TodosViewForm from "./features/TodosViewForm";
 import "./App.css";
 
-   
-function encodeUrl(baseUrl, { sortField, sortDirection, queryString }) {
-  const sortQuery = `sort[0][field]=${sortField}&sort[0][direction]=${sortDirection}`;
-
-  let searchQuery = "";
-  if (queryString) {
-    searchQuery = `&filterByFormula=SEARCH("${queryString}",+title)`;
-  }
-
-  return encodeURI(`${baseUrl}?${sortQuery}${searchQuery}`);
-}
-
-function App() {
+   function App() {
   /* State */
   const [todoList, setTodoList] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
@@ -28,49 +16,69 @@ function App() {
   const [sortField, setSortField] = useState("createdTime");
   const [sortDirection, setSortDirection] = useState("desc");
   const [queryString, setQueryString] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  useEffect(() => {
+  const timeoutId = setTimeout(() => {
+    setDebouncedQuery(queryString);
+  }, 500);
 
-  /* Airtable Config */
+  return () => {
+    clearTimeout(timeoutId);
+  };
+}, [queryString]);
+
   const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
   const token = `Bearer ${import.meta.env.VITE_PAT}`;
 
+  const encodeUrl = useCallback(() => {
+  const sortQuery = `sort[0][field]=${sortField}&sort[0][direction]=${sortDirection}`;
+
+  let searchQuery = "";
+  if (debouncedQuery) {
+    searchQuery = `&filterByFormula=SEARCH("${debouncedQuery}",+title)`;
+  }
+
+  return encodeURI(`${url}?${sortQuery}${searchQuery}`);
+}, [url, sortField, sortDirection, debouncedQuery]);
+
+  /* Airtable Config */
+  
   /* 
      Fetch Todos */
   useEffect(() => {
-    const fetchTodos = async () => {
-      setIsLoading(true);
-      setErrorMessage("");
+  const fetchTodos = async () => {
+    setIsLoading(true);
+    setErrorMessage("");
 
-      const options = {
-        method: "GET",
-        headers: { Authorization: token },
-      };
-
-      try {
-        const resp = await fetch(
-          encodeUrl(url, { sortField, sortDirection, queryString }),
-          options
-        );
-
-        if (!resp.ok) throw new Error(resp.statusText || resp.status);
-
-        const { records } = await resp.json();
-
-        const fetchedTodos = records.map((record) => ({
-          id: record.id,
-          title: record.fields.title || "",
-          isCompleted: record.fields.isCompleted || false,
-        }));
-
-        setTodoList(fetchedTodos);
-      } catch (error) {
-        setErrorMessage(error.message);
-      } finally {
-        setIsLoading(false);
-      }
+    const options = {
+      method: "GET",
+      headers: { Authorization: token },
     };
 
-    fetchTodos();
-  }, [sortField, sortDirection, queryString]);
+    try {
+      const resp = await fetch(encodeUrl(), options);
+
+      if (!resp.ok) throw new Error(resp.statusText || resp.status);
+
+      const { records } = await resp.json();
+
+      const fetchedTodos = records.map((record) => ({
+        id: record.id,
+        title: record.fields.title || "",
+        isCompleted: record.fields.isCompleted || false,
+      }));
+
+      setTodoList(fetchedTodos);
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  fetchTodos();
+}, [encodeUrl, token]);
+
 
   /* Add Todo */
   const addTodo = async (newTodo) => {
@@ -99,7 +107,7 @@ function App() {
 
     try {
       const resp = await fetch(
-        encodeUrl(url, { sortField, sortDirection, queryString }),
+        encodeUrl(),
         options
       );
 
@@ -154,7 +162,7 @@ function App() {
 
     try {
       const resp = await fetch(
-        encodeUrl(url, { sortField, sortDirection, queryString }),
+        encodeUrl(),
         options
       );
 
@@ -201,7 +209,7 @@ function App() {
 
     try {
       const resp = await fetch(
-        encodeUrl(url, { sortField, sortDirection, queryString }),
+        encodeUrl(),
         options
       );
 
