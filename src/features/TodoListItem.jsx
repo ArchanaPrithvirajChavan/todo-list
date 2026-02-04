@@ -1,29 +1,31 @@
 import React, { useState, useEffect } from "react";
-import TextInputWithLabel from "../../shared/TextInputWithLabel";
+import TextInputWithLabel from "../shared/TextInputWithLabel";
+import styles from "./TodoListItem.module.css";
 
 function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [workingTitle, setWorkingTitle] = useState(todo.Title);
+  const [workingTitle, setWorkingTitle] = useState(todo.title);
 
   
   useEffect(() => {
-    setWorkingTitle(todo.Title);
+    setWorkingTitle(todo.title);
   }, [todo]);
 
   const handleUpdate = (event) => {
     event.preventDefault();
     if (!isEditing) return;
-    onUpdateTodo({ ...todo, Title: workingTitle });
+    onUpdateTodo({ ...todo, title: workingTitle });
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setWorkingTitle(todo.Title);
+    setWorkingTitle(todo.title);
     setIsEditing(false);
   };
 
   return (
-    <li>
+    
+    <li className={styles.item}>
       <form onSubmit={handleUpdate}>
         {isEditing ? (
           <>
@@ -48,7 +50,7 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
               checked={todo.isCompleted}
               onChange={() => onCompleteTodo(todo.id)}
             />
-            <span onClick={() => setIsEditing(true)}>{todo.Title}</span>
+            <span onClick={() => setIsEditing(true)}>{todo.title}</span>
           </>
         )}
       </form>
