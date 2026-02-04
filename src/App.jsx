@@ -1,10 +1,11 @@
+import "./App.css";          // global styles
+import styles from "./App.module.css"; // component styles
 
 import React, { useState, useEffect,useCallback } from "react";
 import TodoList from "./features/TodoList";
-
 import TodoForm from "./features/TodoForm";
 import TodosViewForm from "./features/TodosViewForm";
-import "./App.css";
+
 
    function App() {
   /* State */
@@ -22,12 +23,10 @@ import "./App.css";
     setDebouncedQuery(queryString);
   }, 500);
 
-  return () => {
-    clearTimeout(timeoutId);
-  };
+  return () => clearTimeout(timeoutId);
 }, [queryString]);
 
-  const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
+const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`;
   const token = `Bearer ${import.meta.env.VITE_PAT}`;
 
   const encodeUrl = useCallback(() => {
@@ -228,8 +227,17 @@ import "./App.css";
      Render
   */
   return (
-    <>
+     <div className={styles.app}>
       <h1>MY Todo List</h1>
+      <div className={styles.header}>
+  <img
+  src="/deep.jpg"
+  alt="App logo"
+  className={styles.logo}
+/>
+
+</div>
+
 <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
 
       
@@ -257,8 +265,9 @@ import "./App.css";
           <button onClick={() => setErrorMessage("")}>Dismiss</button>
         </div>
       )}
-    </>
+    </div>
   );
-}
 
+   }
 export default App;
+   

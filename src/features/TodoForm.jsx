@@ -1,4 +1,19 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+
+const StyledForm = styled.form`
+  display: flex;
+  gap: 8px;
+`;
+
+const StyledButton = styled.button`
+  padding: 6px 10px;
+
+  &:disabled {
+    font-style: italic;
+    opacity: 0.6;
+  }
+`;
 
 function TodoForm({ onAddTodo, isSaving }) {
   const [workingTodoTitle, setWorkingTodoTitle] = useState("");
@@ -7,28 +22,26 @@ function TodoForm({ onAddTodo, isSaving }) {
     e.preventDefault();
     if (!workingTodoTitle.trim()) return;
 
-    
     await onAddTodo({ title: workingTodoTitle, isCompleted: false });
-
-    
     setWorkingTodoTitle("");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Enter new todo"
         value={workingTodoTitle}
         onChange={(e) => setWorkingTodoTitle(e.target.value)}
       />
-      <button
+
+      <StyledButton
         type="submit"
         disabled={workingTodoTitle.trim() === "" || isSaving}
       >
         {isSaving ? "Saving..." : "Add Todo"}
-      </button>
-    </form>
+      </StyledButton>
+    </StyledForm>
   );
 }
 
