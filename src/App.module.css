@@ -1,8 +1,7 @@
 .app {
   min-height: 100vh;
-  display: flex;
   justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 
 .error {
@@ -11,7 +10,7 @@
   margin-bottom: 12px;
 }
 .header {
-  display: flex;
+  margin-left: 15%;
   align-items: center;
   gap: 12px;
 }

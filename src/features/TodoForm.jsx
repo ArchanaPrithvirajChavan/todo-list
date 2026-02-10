@@ -2,18 +2,22 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
-  display: flex;
-  gap: 8px;
+  
+  justify-content: center;  
+  align-items: center;       
+  height: 10vh;            
 `;
 
 const StyledButton = styled.button`
   padding: 6px 10px;
+  align-items: center;
 
   &:disabled {
     font-style: italic;
     opacity: 0.6;
   }
 `;
+
 
 function TodoForm({ onAddTodo, isSaving }) {
   const [workingTodoTitle, setWorkingTodoTitle] = useState("");

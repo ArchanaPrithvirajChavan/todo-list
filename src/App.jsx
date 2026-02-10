@@ -227,47 +227,45 @@ const url = `https://api.airtable.com/v0/${import.meta.env.VITE_BASE_ID}/${impor
      Render
   */
   return (
-     <div className={styles.app}>
-      <h1>MY Todo List</h1>
-      <div className={styles.header}>
-  <img
-  src="/deep.jpg"
-  alt="App logo"
-  className={styles.logo}
-/>
+  <div className={styles.app}>
+    <h1>MY Todo List</h1>
 
-</div>
-
-<TodoForm onAddTodo={addTodo} isSaving={isSaving} />
-
-      
-  <TodoList
-        todoList={todoList}
-        onCompleteTodo={completeTodo}
-        onUpdateTodo={updateTodo}
-        isLoading={isLoading}
+    <div className={styles.logo}>
+      <img
+        src="/deep.jpg"
+        alt="App logo"
+        className={styles.logo}
       />
-
-<TodosViewForm
-        sortField={sortField}
-        setSortField={setSortField}
-        sortDirection={sortDirection}
-        setSortDirection={setSortDirection}
-        queryString={queryString}
-        setQueryString={setQueryString}
-      />
-      
-
-      {errorMessage && (
-        <div>
-          <hr />
-          <p style={{ color: "red" }}>{errorMessage}</p>
-          <button onClick={() => setErrorMessage("")}>Dismiss</button>
-        </div>
-      )}
     </div>
-  );
 
+    <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
+
+    <TodoList
+      todoList={todoList}
+      onCompleteTodo={completeTodo}
+      onUpdateTodo={updateTodo}
+      isLoading={isLoading}
+    />
+
+    <TodosViewForm
+      sortField={sortField}
+      setSortField={setSortField}
+      sortDirection={sortDirection}
+      setSortDirection={setSortDirection}
+      queryString={queryString}
+      setQueryString={setQueryString}
+    />
+
+    {errorMessage && (
+      <div className={styles.error}>
+        <p>{errorMessage}</p>
+        <button onClick={() => setErrorMessage("")}>Dismiss</button>
+      </div>
+    )}
+  </div>
+);
    }
+
+   
 export default App;
    

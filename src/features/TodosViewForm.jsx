@@ -1,4 +1,29 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components"
+
+const StyledForm = styled.form`
+  background-color: brown;
+  padding: 5%;
+  text-align: center;
+`;
+const StyledButton =styled.button`
+margin-left:10px;
+color:blue;
+padding:2%`;   
+
+const StyledLabel= styled.label`
+text-align: end;
+    color: rgb(236, 234, 238);
+    padding: 1%;`
+    const SearchSection = styled.div`
+  margin-bottom: 15px;
+`;
+
+const SortSection = styled.div`
+  margin-top: 10px;
+`;
+
+
 
 function TodosViewForm({
   sortField,
@@ -29,12 +54,13 @@ function TodosViewForm({
   }, [localQueryString, setQueryString]);
 
   return (
-    <form style={{ marginBottom: "20px" }} onSubmit={preventRefresh}>
+    
+    <StyledForm onSubmit={preventRefresh}>
       {/* --- Search Todos --- */}
-      <div style={{ marginBottom: "10px" }}>
-        <label htmlFor="search" style={{ marginRight: "10px" }}>
+      <SearchSection>
+        <StyledLabel htmlFor="search">
           Search todos:
-        </label>
+        </StyledLabel>
 
         <input
           type="text"
@@ -44,20 +70,17 @@ function TodosViewForm({
           placeholder="Type to search..."
         />
 
-        <button
+        <StyledButton
           type="button"
           onClick={() => setLocalQueryString("")}
-          style={{ marginLeft: "10px" }}
-        >
-          Clear
-        </button>
-      </div>
-
-      {/* --- Sort Controls --- */}
-      <div>
-        <label htmlFor="sortField" style={{ marginRight: "10px" }}>
+          >
+         Clear
+        </StyledButton>
+       </SearchSection>
+      <SortSection>
+        <StyledLabel htmlFor="sortField" >
           Sort by:
-        </label>
+        </StyledLabel>
         <select
           id="sortField"
           value={sortField}
@@ -68,12 +91,11 @@ function TodosViewForm({
           <option value="isCompleted">Completed</option>
         </select>
 
-        <label
+        <StyledLabel
           htmlFor="sortDirection"
-          style={{ marginLeft: "20px", marginRight: "10px" }}
         >
           Direction:
-        </label>
+        </StyledLabel>
         <select
           id="sortDirection"
           value={sortDirection}
@@ -82,8 +104,8 @@ function TodosViewForm({
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
         </select>
-      </div>
-    </form>
+      </SortSection>
+    </StyledForm>
   );
 }
 
