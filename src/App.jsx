@@ -10,7 +10,7 @@ import {
   reducer as todosReducer,
   actions as todoActions,
   initialState as initialTodosState,
-} from "./features/src/reducers/todos.reducer";
+} from "./reducer/todos.reducer";
 
 function App() {
   // --- useReducer for all todos state ---
